@@ -7,8 +7,7 @@
 (function(){
     let drone = false;
     let targetAlt = 0;
-
-    // DroneモードON/OFFボタン
+   
     const btn = document.createElement("button");
     btn.innerText = "Drone Mode";
     btn.style.position = "fixed";
@@ -28,7 +27,7 @@
         }
     };
 
-    // ジョイスティック作成
+    
     const stick = document.createElement("div");
     stick.style.position = "fixed";
     stick.style.left = "20px";
@@ -72,7 +71,7 @@
         knob.style.top = "25px";
     });
 
-    // 上下スライダー
+    
     const slider = document.createElement("input");
     slider.type="range";
     slider.min="-1"; slider.max="1"; slider.step="0.01";
@@ -90,20 +89,20 @@
         if(!drone || !geofs.aircraft.instance) return;
         let ac = geofs.aircraft.instance;
 
-        // 上下移動（ホバリング補正付き）
+        
         let altDiff = slider.value*0.5 + (targetAlt - ac.llaLocation[2])*0.02;
         ac.llaLocation[2] += altDiff;
 
-        // 機体方向に合わせた前後左右移動
-        let heading = ac.htr[0]; // 機体のヨー角
-        let speed = 0.15; // 基本速度係数
+        
+        let heading = ac.htr[0]; 
+        let speed = 0.15; 
         let forward = stickY * speed;
         let strafe  = stickX * speed;
 
         ac.llaLocation[0] += forward * Math.cos(heading) - strafe * Math.sin(heading);
         ac.llaLocation[1] += forward * Math.sin(heading) + strafe * Math.cos(heading);
 
-        // 横流れ抑制＆水平維持
+        
         ac.vel[0] *= 0.85; ac.vel[1] *= 0.85;
         ac.htr[1] *= 0.8; ac.htr[2] *= 0.8;
 
