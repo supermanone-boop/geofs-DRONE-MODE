@@ -95,7 +95,7 @@
 
         
         let heading = ac.htr[0]; 
-        let speed = 0.15; 
+        let speed = 0.0005; 
         let forward = stickY * speed;
         let strafe  = stickX * speed;
 
